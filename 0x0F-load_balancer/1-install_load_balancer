@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #Installs and configures HAproxy in a load balancer server
 # Update the system
 sudo apt update
