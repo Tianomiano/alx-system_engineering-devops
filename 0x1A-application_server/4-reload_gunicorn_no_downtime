@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# a simple Bash script to reload Gunicorn in a graceful way
+
+# path to gunicorn
+GUNICORN_BIN="/home/ubuntu/.local/bin/gunicorn"
+
+# Path to gunicorn application
+APP_MODULE="/home/ubuntu/AirBnB_clone_v4"
+
+# Get the current number of workers
+NUM_WORKERS=$(pgrep -c -f "[g]unicorn.*$APP_MODULE")
+
+# Determine the number of workers to restart
+NUM_TO_RESTART=2
+
+# Calculate the number of workers to keep
+NUM_TO_KEEP=$((NUM_WORKERS - NUM_TO_RESTART))
+
+# Restart the specified number of workers gracefully
+$GUNICORN_BIN --bind 0.0.0.0:5003 --workers=$NUM_TO_KEEP --reload $APP_MODULE
+
+# Wait for a few seconds before restarting the remaining workers
+sleep 5
+
+# Restart the remaining workers gracefully
+$GUNICORN_BIN --bind 0.0.0.0:5003 --workers=$NUM_TO_RESTART --reload $APP_MODULE
+
