@@ -13,4 +13,3 @@ exec { 'increase-soft-file-limit-for-holberton-user':
   path    => '/usr/local/bin/:/bin/'
   unless  => 'grep -q "^holberton soft.*50000" /etc/security/limits.conf',
 }
-
